@@ -1,5 +1,5 @@
 
-import { extname, join } from 'node:path'
+import { extname, join, sep } from 'node:path'
 
 import { generateSitemap, generateFeed } from '../render/feed'
 import { createServer, broadcast } from '../tools/server'
@@ -106,7 +106,7 @@ const sysfiles = getSystemFiles()
 
 export function findAssetByURL(url, assets=[]) {
   return [...sysfiles, ...assets].find(asset => {
-    return url.endsWith('.html.js') ? asset.path == url.slice(1, -3)
+    return url.endsWith('.html.js') ? asset.path == url.slice(1, -3).replaceAll('/',sep)
       :  asset.url == url
   })
 }
